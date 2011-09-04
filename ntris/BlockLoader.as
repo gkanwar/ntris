@@ -12,13 +12,15 @@ package ntris
 	{
 		private var loader:URLLoader;
 		private var blockDataLoaded:Boolean = false;
-		private var difficultyLevels:uint;
-		private var numBlockTypes:Array;
-		private var blockData:Array;
 		private var $mainRef:Main;
-		public function BlockLoader($mainRefIncoming:Main)
+		private var $refNumBlockTypes:Array;
+		private var $refBlockData:Array;
+		
+		public function BlockLoader($mainRefIncoming:Main, $refNumBlockTypesIncoming:Array, $refBlockDataIncoming:Array)
 		{
 			$mainRef = $mainRefIncoming;
+			$refNumBlockTypes = $refNumBlockTypesIncoming;
+			$refBlockData = $refBlockDataIncoming;
 		}
 		
 		public function openBlockData():void
@@ -36,16 +38,14 @@ package ntris
 		{
 			var data:Array = loader.data.split(',');
 			var streamCounter:int = 0;
-			difficultyLevels = data[streamCounter++];
-			numBlockTypes = new Array();
-			blockData = new Array();
+			var difficultyLevels:int = data[streamCounter++];
 			
 			for (var j:int = 0; j < difficultyLevels; j++)
 			{
-				numBlockTypes.push(data[streamCounter++]);
+				$refNumBlockTypes.push(data[streamCounter++]);
 			}
 			
-			for (var k:int = 0; k < numBlockTypes[difficultyLevels - 1]; k++)
+			for (var k:int = 0; k < $refNumBlockTypes[difficultyLevels - 1]; k++)
 			{
 				var tempBlock:Block = new Block();
 				tempBlock.x = data[streamCounter++];
@@ -56,9 +56,9 @@ package ntris
 					tempBlock.squares[i].x = data[streamCounter++];
 					tempBlock.squares[i].y = data[streamCounter++];
 				}
-				tempBlock.color = Color.mixedColor(Color.BLACK, data[streamCounter++], 0.2);
+				tempBlock.color = Color.mixedColor(Color.BLACK, Color.colorCode(data[streamCounter++]), 0.2);
 				tempBlock.height = calculateBlockHeight(tempBlock);
-				blockData.push(tempBlock);
+				$refBlockData.push(tempBlock);
 			}
 			
 			if (streamCounter != data.length)
