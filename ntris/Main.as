@@ -1,9 +1,6 @@
 package ntris
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
-	//import flash.filesystem.File;
-	import flash.net.FileFilter;
 	import ntris.Board;
 	
 	
@@ -21,7 +18,7 @@ package ntris
 		}
 		
 		private function openBlockData():void {
-			//var blocksFile:File;
+			
 		}
 	}
 }
