@@ -5,18 +5,18 @@ package ntris
 	
 	public class Block
 	{
-		var x:int = 0;
-		var y:int = 0;
-		var angle:int = 0;
-		var numSquares:int = 0;
-		var squares:Array = new Array(Constants.MAXBLOCKSIZE);
-		var color:uint = 0xFF0000;
-		var shoveaways:int = 0;
-		var localStickFrames:int = Constants.MAXLOCALSTICKFRAMES;
-		var globalStickFrames:int = Constants.MAXGLOBALSTICKFRAMES;
-		var rotates:Boolean = true;
-		var height:int = 0;
-		var rowsDropped:int = 0;
+		public var x:int = 0;
+		public var y:int = 0;
+		public var angle:int = 0;
+		public var numSquares:int = 0;
+		public var squares:Array = new Array(Constants.MAXBLOCKSIZE);
+		public var color:uint = 0xFF0000;
+		public var shoveaways:int = 0;
+		public var localStickFrames:int = Constants.MAXLOCALSTICKFRAMES;
+		public var globalStickFrames:int = Constants.MAXGLOBALSTICKFRAMES;
+		public var rotates:Boolean = true;
+		public var height:int = 0;
+		public var rowsDropped:int = 0;
 		
 		public function Block()
 		{
