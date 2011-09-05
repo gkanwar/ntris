@@ -6,6 +6,7 @@ package ntris
 		public static const MAXBLOCKSIZE:int = 10;
 		public static const NUMROWS:int = (24 + MAXBLOCKSIZE - 1);
 		public static const NUMCOLS:int = 12;
+		public static const FPS:int = 60;
 		
 		public static const SQUAREWIDTH:int = 21;
 		public static const SIDEBOARD:int = 7 * SQUAREWIDTH / 2;

@@ -1,6 +1,9 @@
 package ntris
 {
 	import flash.display.Sprite;
+	import flash.utils.getTimer;
+	import flash.utils.setTimeout;
+	import flash.events.Event;
 	import ntris.Board;
 	import ntris.BlockLoader;
 	import ntris.Color;
@@ -13,6 +16,8 @@ package ntris
 		private var difficultyLevels:uint;
 		private var numBlockTypes:Array = new Array();
 		private var blockData:Array = new Array();
+		private var nextFrame:int = 0;
+		private var board:Board;
 		
 		public function Main():void
 		{
@@ -20,13 +25,34 @@ package ntris
 			var blockLoader:BlockLoader = new BlockLoader(this, numBlockTypes, blockData);
 			blockLoader.openBlockData();
 		}
-
+		
 		public function finishMain():void
 		{
 			difficultyLevels = numBlockTypes.length;
-			var board:Board = new Board();
+			board = new Board();
 			addChild(board);
-			board.redraw();
+			gameLoop();
+		}
+		
+		private function gameLoop():void
+		{
+			while (true)
+			{
+				var curTime:int = getTimer();
+				if (curTime >= nextFrame)
+				{
+					nextFrame = curTime + 1000 / Constants.FPS;
+					board.draw();
+					
+					var timeDiff:int = nextFrame - getTimer() - 2;
+					if (timeDiff < 0)
+					{
+						timeDiff = 0;
+					}
+					setTimeout(gameLoop, timeDiff);
+					break;
+				}
+			}
 		}
 	}
 }
