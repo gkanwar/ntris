@@ -22,15 +22,8 @@ package ntris
 			}
 		}
 		
-		private function drawLineOffset(x1:int, y1:int, x2:int, y2:int):void
+		public function timeStep(inputs:Array)
 		{
-			graphics.moveTo(x1 + Constants.BORDER, y1 + Constants.BORDER);
-			graphics.lineTo(x2 + Constants.BORDER, y2 + Constants.BORDER);
-		}
-		
-		private function drawRectOffset(x:int, y:int, w:int, h:int):void
-		{
-			graphics.drawRect(x + Constants.BORDER, y + Constants.BORDER, w, h);
 		}
 		
 		public function draw():void
@@ -88,6 +81,17 @@ package ntris
 			graphics.lineStyle(1, Color.mixedColor(Color.WHITE, Color.RAINBOWCODE[color], Color.LAMBDA));
 			graphics.beginFill(Color.RAINBOWCODE[color]);
 			drawRectOffset(pos.x, pos.y, Constants.SQUAREWIDTH - 1, Constants.SQUAREWIDTH - 1);
+		}
+		
+		private function drawLineOffset(x1:int, y1:int, x2:int, y2:int):void
+		{
+			graphics.moveTo(x1 + Constants.BORDER, y1 + Constants.BORDER);
+			graphics.lineTo(x2 + Constants.BORDER, y2 + Constants.BORDER);
+		}
+		
+		private function drawRectOffset(x:int, y:int, w:int, h:int):void
+		{
+			graphics.drawRect(x + Constants.BORDER, y + Constants.BORDER, w, h);
 		}
 	}
 }

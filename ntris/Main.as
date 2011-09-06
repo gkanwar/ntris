@@ -18,6 +18,7 @@ package ntris
 		private var blockData:Array = new Array();
 		private var nextFrame:int = 0;
 		private var board:Board;
+		private var input:Input;
 		
 		public function Main():void
 		{
@@ -31,6 +32,8 @@ package ntris
 			difficultyLevels = numBlockTypes.length;
 			board = new Board();
 			addChild(board);
+			stage.focus = board;
+			input = new Input( board );
 			gameLoop();
 		}
 		
@@ -42,8 +45,7 @@ package ntris
 				if (curTime >= nextFrame)
 				{
 					nextFrame = curTime + 1000 / Constants.FPS;
-					board.draw();
-					
+					update(curTime);
 					var timeDiff:int = nextFrame - getTimer() - 2;
 					if (timeDiff < 0)
 					{
@@ -53,6 +55,11 @@ package ntris
 					break;
 				}
 			}
+		}
+		private function update(curTime:int) : void
+		{
+			board.timeStep(input.query(curTime));
+			board.draw();
 		}
 	}
 }
