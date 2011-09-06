@@ -19,18 +19,19 @@ package ntris
 		private var nextFrame:int = 0;
 		private var board:Board;
 		private var input:Input;
+		private var blockLoader : BlockLoader;
 		
 		public function Main():void
 		{
 			// The rest of the initialization code is in finishMain(), called after BlockLoader is finished loading data
-			var blockLoader:BlockLoader = new BlockLoader(this, numBlockTypes, blockData);
+			blockLoader = new BlockLoader(this, numBlockTypes, blockData);
 			blockLoader.openBlockData();
 		}
 		
 		public function finishMain():void
 		{
 			difficultyLevels = numBlockTypes.length;
-			board = new Board();
+			board = new Board(blockLoader.$refBlockData);
 			addChild(board);
 			stage.focus = board;
 			input = new Input( board );

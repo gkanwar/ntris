@@ -9,7 +9,6 @@ package ntris
 	{
 		private var isKeyDown:Array = new Array();
 		private var nextFireTime:Array = new Array();
-		public var isKeyExecuted:Array = new Array();
 		
 		public var pauseTime:int = 120;
 		public var repeatTime:int = 30;
@@ -35,15 +34,16 @@ package ntris
 		
 		public var keyMap:Array = new Array();
 		
-		public const START = 0;
-		public const HOLD = 1;
-		public const HARD_DROP = 2;
-		public const SOFT_DROP = 3;
-		public const MOVE_LEFT = 4;
-		public const MOVE_RIGHT = 5;
-		public const ROTATE_LEFT = 6;
-		public const ROTATE_RIGHT = 7;
-		public const NUM_KEYS = 8;
+		public static const START = 0;
+		
+		public static const MOVE_LEFT = 1;
+		public static const MOVE_RIGHT = 2;
+		public static const ROTATE_LEFT = 3;
+		public static const ROTATE_RIGHT = 4;
+		public static const HARD_DROP = 5;
+		public static const SOFT_DROP = 6;
+		public static const HOLD = 7;
+		public static const NUM_KEYS = 8;
 		
 		public function Input($boardRef:Board)
 		{
@@ -69,7 +69,7 @@ package ntris
 			keyMap[KEY_RIGHT_ARROW] = MOVE_RIGHT;
 			keyMap[KEY_UP_ARROW] = ROTATE_RIGHT;
 			keyMap[KEY_X] = ROTATE_RIGHT;
-			keyMap[KEY_Z] = ROTATE_LEFT;	
+			keyMap[KEY_Z] = ROTATE_LEFT;
 		}
 		
 		private function keyDown(event:KeyboardEvent):void
@@ -77,7 +77,6 @@ package ntris
 			if (keyMap[event.keyCode] != undefined)
 			{
 				var key:int = keyMap[event.keyCode];
-				isKeyExecuted[key] = false;
 				isKeyDown[key] = true;
 				nextFireTime[key] = NOW;
 			}
@@ -94,25 +93,29 @@ package ntris
 		public function query(curTime:int):Array
 		{
 			var firedKeys:Array = new Array();
+			var releasedKeys:Array = new Array();
 			for (var i:int = 0; i < NUM_KEYS; i++)
 			{
 				if (isKeyDown[i])
 				{
-					if (nextFireTime[i] <= curTime)
+					if (nextFireTime[i] == NOW)
 					{
 						firedKeys.push(i);
-						if (nextFireTime[i] == NOW)
-						{
-							nextFireTime[i] = curTime + pauseTime;
-						}
-						else
-						{
-							nextFireTime[i] += repeatTime;
-						}
+						nextFireTime[i] = curTime + pauseTime;
+					}
+					else if (curTime >= nextFireTime[i])
+					{
+						firedKeys.push(i);
+						nextFireTime[i] += repeatTime;
 					}
 				}
+				else if (nextFireTime[i] != NOW)
+				{
+					nextFireTime[i] = NOW;
+					releasedKeys.push(i);
+				}
 			}
-			return firedKeys;
+			return [firedKeys, releasedKeys];
 		}
 	}
 }

@@ -14,7 +14,7 @@ package ntris
 		private var blockDataLoaded:Boolean = false;
 		private var $mainRef:Main;
 		private var $refNumBlockTypes:Array;
-		private var $refBlockData:Array;
+		public var $refBlockData:Array;
 		
 		public function BlockLoader($mainRefIncoming:Main, $refNumBlockTypesIncoming:Array, $refBlockDataIncoming:Array)
 		{
