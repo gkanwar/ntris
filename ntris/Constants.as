@@ -19,6 +19,11 @@ package ntris
 		public static const MAXLOCALSTICKFRAMES:int = 60;
 		public static const MAXGLOBALSTICKFRAMES:int = 120;
 		
+		public static const SCOREINTERVAL:int= 60;
+		public static const MINR : Number = 0.1;
+		public static const MAXR : Number= 0.9;
+		public static const HALFRSCORE : int = 480;
+		
 		public function Constants()
 		{
 		}

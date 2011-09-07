@@ -42,11 +42,16 @@ package ntris
 		
 		private const PREVIEW:int = 5;
 		private const PREVIEWANIMFRAMES:int = 3;
+		private var numBlockTypes : Array;
 		
-		public function Board($refBlockData:Array)
+		private var difficultyLevels : int;
+		
+		public function Board($refBlockData:Array , iDifficultyLevels: int, iNumBlockTypes : Array )
 		{
 			frame = 0;
 			$blockData = $refBlockData;
+			numBlockTypes = iNumBlockTypes;
+			difficultyLevels = iDifficultyLevels;
 			for (var i:int = 0; i < Constants.NUMCOLS; i++)
 			{
 				boardBlocks[i] = new Array();
@@ -104,6 +109,53 @@ package ntris
 			boardState = PLAYING;
 		}
 		
+		private function playTetrisGod():void
+		{
+			var type:int;
+			var level:int;
+			
+			while (preview.length < PREVIEW)
+			{
+				
+				level = difficultyLevel(score);
+				type = Math.floor(Math.random() * numBlockTypes[level]);
+				preview.push(type);
+			}
+		}
+		
+		private function difficultyLevel( s : int ) : int
+		{
+			if ( difficultyLevels == 1)
+			{
+				return 0;
+			}
+			
+			var x : int;
+			var prob : int;
+			var ratio : int;
+			prob = Math.random();
+			if (prob < 0)
+			{
+				prob += 1;
+			}
+			
+			// calculate the ratio r between the probability of different levels
+			x = 2.0 * (s - Constants.HALFRSCORE) / Constants.HALFRSCORE;
+			ratio = (Constants.MAXR - Constants.MINR) * (x / Math.sqrt(1 + x * x) + 1) / 2 + Constants.MINR;
+			
+			// run through difficulty levels and compare p to a sigmoid for each level
+			for (var i :int = 1; i < difficultyLevels; i++)
+			{
+				x = 2.0 * (s - (Constants.SCOREINTERVAL * i)) / Constants.SCOREINTERVAL;
+				if (prob > Math.pow(ratio, i) * (x / Math.sqrt(1 + x * x) + 1) / 2)
+				{
+					return i - 1;
+				}
+			}
+			
+			return difficultyLevels - 1;
+		}
+		
 		public function timeStep(inputs:Array):void
 		{
 			var firedKeys:Array = inputs[0];
@@ -129,6 +181,7 @@ package ntris
 			
 			if (boardState == PLAYING)
 			{
+				playTetrisGod();
 				var trans:Point = new Point(0, 0);
 				var deltaAngle:int = 0;
 				
@@ -212,7 +265,7 @@ package ntris
 						trans.x--;
 					}
 				}
-
+				
 				var check:int = checkBlock(curBlock);
 				if ((check != OK) && (check % OVERLAP != TOPEDGE))
 				{
@@ -252,7 +305,7 @@ package ntris
 					moved = true;
 				}
 			}
-				
+			
 			if (moved)
 			{
 				curBlock.localStickFrames = Constants.MAXLOCALSTICKFRAMES;
@@ -392,6 +445,7 @@ package ntris
 				else
 				{
 					block.y -= i;
+					trace(i);
 					return i - 1;
 				}
 			}
@@ -489,7 +543,7 @@ package ntris
 			curBlock.color = $blockData[blockType].color;
 			curBlock.rotates = $blockData[blockType].rotates;
 			curBlock.height = $blockData[blockType].height;
-  
+			
 			curBlock.rowsDropped = calculateRowsDropped(curBlock);
 			if (curBlock.rowsDropped < 0)
 			{
@@ -603,7 +657,9 @@ package ntris
 						}
 					}
 				}
-			} else {
+			}
+			else
+			{
 				graphics.lineStyle(1, Color.mixedColor(Color.WHITE, color, Color.LAMBDA));
 				graphics.beginFill(color);
 				drawRectOffset(pos.x, pos.y, Constants.SQUAREWIDTH - 1, Constants.SQUAREWIDTH - 1);

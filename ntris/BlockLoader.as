@@ -15,6 +15,7 @@ package ntris
 		private var $mainRef:Main;
 		private var $refNumBlockTypes:Array;
 		public var $refBlockData:Array;
+		public var difficultyLevels : int;
 		
 		public function BlockLoader($mainRefIncoming:Main, $refNumBlockTypesIncoming:Array, $refBlockDataIncoming:Array)
 		{
@@ -38,7 +39,7 @@ package ntris
 		{
 			var data:Array = loader.data.split(',');
 			var streamCounter:int = 0;
-			var difficultyLevels:int = data[streamCounter++];
+			difficultyLevels = data[streamCounter++];
 			
 			for (var j:int = 0; j < difficultyLevels; j++)
 			{

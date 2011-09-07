@@ -26,12 +26,13 @@ package ntris
 			// The rest of the initialization code is in finishMain(), called after BlockLoader is finished loading data
 			blockLoader = new BlockLoader(this, numBlockTypes, blockData);
 			blockLoader.openBlockData();
+			difficultyLevels = blockLoader.difficultyLevels;
 		}
 		
 		public function finishMain():void
 		{
 			difficultyLevels = numBlockTypes.length;
-			board = new Board(blockLoader.$refBlockData);
+			board = new Board(blockLoader.$refBlockData, difficultyLevels, numBlockTypes );
 			addChild(board);
 			stage.focus = board;
 			input = new Input( board );
