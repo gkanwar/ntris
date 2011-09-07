@@ -42,11 +42,11 @@ package ntris
 		
 		private const PREVIEW:int = 5;
 		private const PREVIEWANIMFRAMES:int = 3;
-		private var numBlockTypes : Array;
+		private var numBlockTypes:Array;
 		
-		private var difficultyLevels : int;
+		private var difficultyLevels:int;
 		
-		public function Board($refBlockData:Array , iDifficultyLevels: int, iNumBlockTypes : Array )
+		public function Board($refBlockData:Array, iDifficultyLevels:int, iNumBlockTypes:Array)
 		{
 			frame = 0;
 			$blockData = $refBlockData;
@@ -104,6 +104,9 @@ package ntris
 			curBlockType = -1;
 			curBlock = null;
 			
+			playTetrisGod();
+			getNextBlock();
+			
 			score = 0;
 			combo = 0;
 			boardState = PLAYING;
@@ -116,23 +119,22 @@ package ntris
 			
 			while (preview.length < PREVIEW)
 			{
-				
 				level = difficultyLevel(score);
 				type = Math.floor(Math.random() * numBlockTypes[level]);
 				preview.push(type);
 			}
 		}
 		
-		private function difficultyLevel( s : int ) : int
+		private function difficultyLevel(s:int):int
 		{
-			if ( difficultyLevels == 1)
+			if (difficultyLevels == 1)
 			{
 				return 0;
 			}
 			
-			var x : int;
-			var prob : int;
-			var ratio : int;
+			var x:int;
+			var prob:int;
+			var ratio:int;
 			prob = Math.random();
 			if (prob < 0)
 			{
@@ -144,7 +146,7 @@ package ntris
 			ratio = (Constants.MAXR - Constants.MINR) * (x / Math.sqrt(1 + x * x) + 1) / 2 + Constants.MINR;
 			
 			// run through difficulty levels and compare p to a sigmoid for each level
-			for (var i :int = 1; i < difficultyLevels; i++)
+			for (var i:int = 1; i < difficultyLevels; i++)
 			{
 				x = 2.0 * (s - (Constants.SCOREINTERVAL * i)) / Constants.SCOREINTERVAL;
 				if (prob > Math.pow(ratio, i) * (x / Math.sqrt(1 + x * x) + 1) / 2)
