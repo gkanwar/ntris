@@ -34,22 +34,22 @@ package ntris
 		
 		public var keyMap:Array = new Array();
 		
-		public static const START = 0;
+		public static const START:int = 0;
 		
-		public static const MOVE_LEFT = 1;
-		public static const MOVE_RIGHT = 2;
-		public static const ROTATE_LEFT = 3;
-		public static const ROTATE_RIGHT = 4;
-		public static const HARD_DROP = 5;
-		public static const SOFT_DROP = 6;
-		public static const HOLD = 7;
-		public static const NUM_KEYS = 8;
+		public static const MOVE_LEFT:int = 1;
+		public static const MOVE_RIGHT:int = 2;
+		public static const ROTATE_LEFT:int = 3;
+		public static const ROTATE_RIGHT:int = 4;
+		public static const HARD_DROP:int = 5;
+		public static const SOFT_DROP:int = 6;
+		public static const HOLD:int = 7;
+		public static const NUM_KEYS:int = 8;
 		
 		public function Input($boardRef:Board)
 		{
 			setDefaultKeyMap();
 			$gameBoard = $boardRef;
-			$gameBoard.addEventListener(MouseEvent.CLICK, function(event:MouseEvent)
+			$gameBoard.addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void
 				{
 					$gameBoard.stage.focus = $gameBoard;
 				});

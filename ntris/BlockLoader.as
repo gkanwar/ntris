@@ -48,7 +48,7 @@ package ntris
 			for (var k:int = 0; k < $refNumBlockTypes[difficultyLevels - 1]; k++)
 			{
 				var tempBlock:Block = new Block();
-				tempBlock.x = data[streamCounter++];
+				tempBlock.x = data[streamCounter++] + Constants.NUMCOLS/2;
 				tempBlock.y = data[streamCounter++];
 				tempBlock.numSquares = data[streamCounter++];
 				for (var i:int = 0; i < tempBlock.numSquares; i++)
@@ -58,6 +58,7 @@ package ntris
 				}
 				tempBlock.color = Color.mixedColor(Color.BLACK, Color.colorCode(data[streamCounter++]), 0.2);
 				tempBlock.height = calculateBlockHeight(tempBlock);
+				tempBlock.y += Constants.MAXBLOCKSIZE - tempBlock.height;
 				$refBlockData.push(tempBlock);
 			}
 			
