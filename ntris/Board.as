@@ -132,9 +132,9 @@ package ntris
 				return 0;
 			}
 			
-			var x:int;
-			var prob:int;
-			var ratio:int;
+			var x: Number;
+			var prob: Number;
+			var ratio: Number;
 			prob = Math.random();
 			if (prob < 0)
 			{
