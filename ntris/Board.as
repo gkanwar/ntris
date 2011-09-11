@@ -447,7 +447,6 @@ package ntris
 				else
 				{
 					block.y -= i;
-					trace(i);
 					return i - 1;
 				}
 			}

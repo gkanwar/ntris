@@ -39,6 +39,11 @@ package ntris
 		{
 			var data:Array = loader.data.split(',');
 			var streamCounter:int = 0;
+			
+			for ( var i : int = 0; i < data.length; i++ )
+			{
+				data[i] = int(data[i]);
+			}
 			difficultyLevels = data[streamCounter++];
 			
 			for (var j:int = 0; j < difficultyLevels; j++)
@@ -49,8 +54,8 @@ package ntris
 			for (var k:int = 0; k < $refNumBlockTypes[difficultyLevels - 1]; k++)
 			{
 				var tempBlock:Block = new Block();
-				tempBlock.x = data[streamCounter++] + Constants.NUMCOLS/2;
-				tempBlock.y = data[streamCounter++];
+				tempBlock.x = data[streamCounter++] + Constants.NUMCOLS / 2;
+				tempBlock.y = data[streamCounter++];	
 				tempBlock.numSquares = data[streamCounter++];
 				for (var i:int = 0; i < tempBlock.numSquares; i++)
 				{
