@@ -211,7 +211,7 @@ package ntris
 					{
 						trans.y += 1;
 					}
-					else if (key == Input.HOLD && !isKeyExecuted[key])
+					else if (key == Input.HOLD && !isKeyExecuted[key] && !holdUsed)
 					{
 						getNextBlock(true);
 						isKeyExecuted[key] = true;
